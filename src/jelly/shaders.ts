@@ -163,11 +163,13 @@ float ray(vec2 uv, float x, float w, float slant) {
 void main() {
   vec3 col = mix(uDeep, uShallow, pow(vUv.y, 1.7) * 0.85);
   float r = 0.0;
-  r += ray(vUv, 0.28 + sin(uTime * 0.11) * 0.04, 0.055, 0.22) * 0.5;
-  r += ray(vUv, 0.52 + sin(uTime * 0.07 + 2.0) * 0.05, 0.035, 0.3) * 0.4;
-  r += ray(vUv, 0.74 + sin(uTime * 0.09 + 4.0) * 0.04, 0.07, 0.16) * 0.35;
-  col += uShallow * r * pow(vUv.y, 2.0) * 0.55;
-  float vig = smoothstep(1.25, 0.35, distance(vUv, vec2(0.5, 0.55)));
+  r += ray(vUv, 0.08 + sin(uTime * 0.08 + 1.1) * 0.03, 0.05, -0.14) * 0.4;
+  r += ray(vUv, 0.28 + sin(uTime * 0.11) * 0.04, 0.055, 0.2) * 0.5;
+  r += ray(vUv, 0.5 + sin(uTime * 0.07 + 2.0) * 0.05, 0.035, -0.26) * 0.4;
+  r += ray(vUv, 0.7 + sin(uTime * 0.09 + 4.0) * 0.05, 0.065, 0.18) * 0.42;
+  r += ray(vUv, 0.9 + sin(uTime * 0.1 + 2.7) * 0.03, 0.05, -0.18) * 0.45;
+  col += uShallow * r * pow(vUv.y, 1.8) * 0.7;
+  float vig = smoothstep(1.45, 0.3, distance(vUv, vec2(0.5, 0.55)));
   col *= 0.65 + vig * 0.35;
   gl_FragColor = vec4(col, 1.0);
 }
