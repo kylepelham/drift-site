@@ -1,0 +1,295 @@
+---
+import "../styles.css"
+
+const title = "Drift : a focused Windows desktop for coding with AI agents"
+const description =
+  "Drift is a focused Windows desktop for coding with AI agents. One installer with workspaces, long-running threads, forking, MCP approvals, and eight themes. Free and MIT licensed."
+const repoUrl = "https://github.com/kylepelham/Drift"
+const releasesUrl = `${repoUrl}/releases/latest`
+const canonical = new URL("/", Astro.site)
+const ogImage = new URL("/og.jpg", Astro.site)
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "Drift",
+  operatingSystem: "Windows 10, Windows 11",
+  applicationCategory: "DeveloperApplication",
+  description,
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  downloadUrl: releasesUrl,
+  license: `${repoUrl}/blob/master/LICENSE`,
+  url: canonical.href,
+  image: ogImage.href,
+  author: { "@type": "Person", name: "Kyle Pelham", url: "https://github.com/kylepelham" },
+}
+
+const features = [
+  {
+    tint: "var(--aqua)",
+    title: "Projects at a glance",
+    body: "Threads live under workspace folders in one sidebar. Rename, personalize, archive, restore. No tabs. Ever.",
+    icon: "folder",
+  },
+  {
+    tint: "var(--coral)",
+    title: "A complete agent engine",
+    body: "Build and plan agents, custom agents, provider OAuth, MCP servers, and plugins, all managed inside the app.",
+    icon: "engine",
+  },
+  {
+    tint: "var(--sand)",
+    title: "Long-session performance",
+    body: "Virtualized transcripts stay smooth at thousands of messages, with streamed reasoning and syntax-highlighted tools.",
+    icon: "bolt",
+  },
+  {
+    tint: "var(--seafoam)",
+    title: "Context control",
+    body: "Fork history, undo and redo turns, steer a running session, or spawn an independent sibling thread mid-flight.",
+    icon: "fork",
+  },
+  {
+    tint: "var(--lilac)",
+    title: "Provider flexibility",
+    body: "Anthropic, OpenAI, GitHub Copilot, Google, OpenRouter, and more. Pick model, agent, and thinking level per thread.",
+    icon: "threads",
+  },
+  {
+    tint: "var(--coral)",
+    title: "Guarded MCP management",
+    body: "Review exact server definitions before enabling them. Changed definitions need a fresh decision and fail closed.",
+    icon: "shield",
+  },
+  {
+    tint: "var(--aqua)",
+    title: "A workspace you can tune",
+    body: "Command palette, rebindable shortcuts, eight themes, custom fonts and CSS, and 18 interface languages.",
+    icon: "palette",
+  },
+  {
+    tint: "var(--sand)",
+    title: "Native desktop behavior",
+    body: "Open files in your editor, get configurable notifications, and install signed updates straight from GitHub Releases.",
+    icon: "plug",
+  },
+]
+
+const icons: Record<string, string> = {
+  folder: '<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z" />',
+  engine:
+    '<rect x="5" y="5" width="14" height="14" rx="2" /><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3" />',
+  bolt: '<path d="M13 2 4 14h6l-1 8 9-12h-6Z" />',
+  fork: '<circle cx="6" cy="5" r="2.2" /><circle cx="18" cy="5" r="2.2" /><circle cx="12" cy="19" r="2.2" /><path d="M6 7.2v2a4 4 0 0 0 4 4h4a4 4 0 0 0 4-4v-2M12 13.2v3.6" />',
+  threads: '<path d="M4 6h16M4 12h10M4 18h13" /><circle cx="19" cy="17.5" r="2.5" />',
+  shield: '<path d="M12 3 5 6v5c0 4.4 3 8.1 7 9.5 4-1.4 7-5.1 7-9.5V6Z" /><path d="m9 12 2 2 4-4" />',
+  palette:
+    '<path d="M12 3a9 9 0 0 0 0 18c1.5 0 2-.9 2-2 0-1.4-1-1.7-1-3 0-1.2 1-2 2.4-2H17a5 5 0 0 0 5-5c0-3.7-4.5-6-10-6Z" /><circle cx="7.5" cy="11" r="1" fill="currentColor" /><circle cx="10.5" cy="7.5" r="1" fill="currentColor" /><circle cx="15" cy="7.5" r="1" fill="currentColor" />',
+  plug: '<path d="M9 3v5M15 3v5M6 8h12v3a6 6 0 0 1-6 6 6 6 0 0 1-6-6Z" /><path d="M12 17v4" />',
+}
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#10161f" />
+    <link rel="canonical" href={canonical.href} />
+    <link rel="icon" type="image/svg+xml" href="/drift-logo.svg" />
+    <link rel="sitemap" href="/sitemap.xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Drift" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical.href} />
+    <meta property="og:image" content={ogImage.href} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage.href} />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <header class="hero">
+      <canvas class="hero-canvas" aria-hidden="true"></canvas>
+      <div class="hero-tint"></div>
+      <div class="hero-inner">
+        <span class="hero-mark mark" role="img" aria-label="Drift the jellyfish"></span>
+        <h1>Drift</h1>
+        <p class="hero-tag">A focused Windows desktop for coding with AI agents.</p>
+        <p class="hero-sub">
+          A complete agent engine in one installer, with workspaces, long-running threads,
+          and a desktop that stays out of your way.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href={releasesUrl} data-installer>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"></path><path d="m7 11 5 5 5-5"></path><path d="M4 20h16"></path></svg>
+            Download for Windows
+          </a>
+          <a class="btn btn-ghost" href={repoUrl}>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.5A10.5 10.5 0 0 0 8.7 22c.5.1.7-.2.7-.5v-1.8c-2.9.6-3.5-1.4-3.5-1.4-.5-1.2-1.2-1.6-1.2-1.6-1-.6.1-.6.1-.6 1 .1 1.6 1.1 1.6 1.1.9 1.6 2.5 1.1 3.1.9.1-.7.4-1.1.7-1.4-2.3-.3-4.8-1.2-4.8-5.2 0-1.1.4-2.1 1.1-2.8-.1-.3-.5-1.4.1-2.8 0 0 .9-.3 2.9 1.1a10 10 0 0 1 5.2 0c2-1.4 2.9-1.1 2.9-1.1.6 1.4.2 2.5.1 2.8.7.7 1.1 1.7 1.1 2.8 0 4-2.5 4.9-4.8 5.2.4.3.7.9.7 1.9v2.9c0 .3.2.6.7.5A10.5 10.5 0 0 0 12 1.5Z"></path></svg>
+            GitHub
+            <span class="star-pill">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2l-6.1 3.4 1.4-6.8L2.2 9.1l6.9-.8Z"></path></svg>
+              <span data-stars>~</span>
+            </span>
+          </a>
+        </div>
+        <p class="hero-note">Free and open source. MIT licensed. Windows 10/11 x64.</p>
+      </div>
+      <span class="scroll-cue">dive in</span>
+    </header>
+
+    <section id="showcase">
+      <svg class="wave-divider" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 40 C 240 70 480 10 720 35 C 960 60 1200 20 1440 45 L 1440 0 L 0 0 Z" fill="var(--bg)"></path>
+      </svg>
+      <div class="wrap">
+        <span class="kicker">See it swim</span>
+        <h2>From splash to shipped, in one window</h2>
+        <p class="lede">
+          Open a workspace, start a thread, and watch the agent read, run, and edit
+          with every tool call laid out clearly. This is Drift at speed.
+        </p>
+        <div class="showcase-frame">
+          <video data-src="/showcase.mp4" autoplay muted loop playsinline preload="none" poster="/poster.jpg"></video>
+        </div>
+        <p class="showcase-caption">
+          A real session, captured from the app and sped up. Your threads stay on your machine.
+        </p>
+      </div>
+    </section>
+
+    <section id="features">
+      <div class="wrap">
+        <span class="kicker">Why Drift</span>
+        <h2>Everything close, nothing in the way</h2>
+        <p class="lede">
+          One installer. No separate Node runtime. No CLI bootstrap. No local server to
+          manage. Your projects, your providers, your machine.
+        </p>
+        <div class="feature-grid">
+          {
+            features.map((f) => (
+              <article class="feature-card" style={`--tint: ${f.tint}`}>
+                <div class="feature-icon">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.9"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                    set:html={icons[f.icon]}
+                  />
+                </div>
+                <h3>{f.title}</h3>
+                <p>{f.body}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section id="how">
+      <div class="wrap">
+        <span class="kicker">How it works</span>
+        <h2>A managed engine, a native shell</h2>
+        <p class="lede">
+          The sidecar listens only on localhost with per-launch credentials. Your prompts
+          go to the provider you configure, and nowhere else.
+        </p>
+        <div class="flow">
+          <div class="flow-card">
+            <b>Drift desktop</b>
+            <span>SolidJS interface plus a Tauri shell with SQLite, updates, and Windows APIs</span>
+          </div>
+          <span class="flow-arrow">~</span>
+          <div class="flow-card">
+            <b>Bundled agent engine</b>
+            <span>Engine lifecycle managed for you, loopback only, random credentials each launch</span>
+          </div>
+          <span class="flow-arrow">~</span>
+          <div class="flow-card">
+            <b>Your providers</b>
+            <span>Model providers, MCP servers, and project tools you choose and approve</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="download" class="download">
+      <div class="wrap">
+        <div class="download-card">
+          <span class="hero-mark mark" role="img" aria-label="Drift"></span>
+          <h2>Take Drift home</h2>
+          <div class="version-pill" data-version>latest release</div>
+          <div class="hero-actions" style="margin-top: 0">
+            <a class="btn btn-primary" href={releasesUrl} data-installer>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"></path><path d="m7 11 5 5 5-5"></path><path d="M4 20h16"></path></svg>
+              Download installer
+            </a>
+            <a class="btn btn-ghost" href={releasesUrl}>All releases</a>
+          </div>
+          <div class="req-row">
+            <span>Windows 10/11 x64</span>
+            <span>WebView2 runtime</span>
+            <span>Bring your own provider account</span>
+          </div>
+          <div class="gh-stats">
+            <div class="gh-stat"><b data-stars>~</b><span>stars</span></div>
+            <div class="gh-stat"><b data-downloads>~</b><span>downloads</span></div>
+            <div class="gh-stat"><b data-forks>~</b><span>forks</span></div>
+          </div>
+          <p class="hero-note" style="margin-top: 1.6rem">
+            Drift is an agent, not a sandbox. It runs with your user account's permissions,
+            so open trusted workspaces and review permission requests.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="beach">
+      <div class="beach-sky"><div class="beach-sun"></div></div>
+      <svg class="beach-waves" viewBox="0 0 1440 110" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 60 C 180 30 360 90 540 65 C 720 40 900 85 1080 60 C 1260 35 1350 70 1440 55 L 1440 110 L 0 110 Z" fill="#5f97b8" opacity="0.55"></path>
+        <path d="M0 75 C 200 50 420 100 640 78 C 860 56 1080 98 1440 70 L 1440 110 L 0 110 Z" fill="#7fb6cf" opacity="0.7"></path>
+        <path d="M0 92 C 240 72 480 108 760 92 C 1040 76 1240 104 1440 88 L 1440 110 L 0 110 Z" fill="#f3d9ad"></path>
+      </svg>
+      <div class="beach-sand">
+        <div class="wrap">
+          <span class="beach-brand">
+            <span class="mark" role="img" aria-label="Drift"></span> Drift
+          </span>
+          <nav class="beach-links">
+            <a href={repoUrl}>GitHub</a>
+            <a href={`${repoUrl}/tree/master/docs`}>Docs</a>
+            <a href={`${repoUrl}/blob/master/LICENSE`}>MIT License</a>
+            <a href={`${repoUrl}/security/advisories/new`}>Report a vulnerability</a>
+            <a href="https://github.com/sst/opencode">OpenCode</a>
+          </nav>
+          <p class="beach-fine">
+            Drift is an independent desktop client built around OpenCode, bundled under its
+            MIT license. Copyright (c) 2026 Kyle Pelham. Drawn ashore by a small jellyfish.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      import { initHeroScene } from "../scripts/hero-scene"
+      import { initStats } from "../scripts/stats"
+      import { initLazyVideo } from "../scripts/lazy-video"
+      initHeroScene()
+      initStats()
+      initLazyVideo()
+    </script>
+  </body>
+</html>

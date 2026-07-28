@@ -1,0 +1,29 @@
+{
+  "name": "drift-site",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bunx --bun astro dev",
+    "build": "bunx --bun astro build",
+    "preview": "bunx --bun astro preview",
+    "typecheck": "tsc --noEmit",
+    "video:capture": "bun scripts/capture-video.ts",
+    "video:studio": "remotion studio remotion/index.ts",
+    "og": "remotion still remotion/index.ts OgCard public/og.jpg"
+  },
+  "dependencies": {
+    "three": "^0.172.0"
+  },
+  "devDependencies": {
+    "@remotion/cli": "^4.0.240",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@types/three": "^0.172.0",
+    "astro": "^7.1.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "remotion": "^4.0.240",
+    "typescript": "^5.8.2"
+  }
+}
