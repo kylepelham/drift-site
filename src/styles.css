@@ -495,36 +495,35 @@ h2 {
 
 .beach-sea {
   position: relative;
-  height: 84px;
+  height: 200px;
   overflow: hidden;
-  background: linear-gradient(to bottom, #6c6787 0%, #59607e 45%, #4d5878);
+  background: linear-gradient(to bottom, #6c6787 0%, #5b6182 32%, #4e587c 68%, #47506f);
 }
 
 .beach-glimmer {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 70px 64px at 50% -6px, rgba(255, 216, 150, 0.6), transparent 72%),
-    radial-gradient(ellipse 150px 90px at 50% 0, rgba(255, 190, 130, 0.22), transparent 75%);
+    radial-gradient(ellipse 70px 70px at 50% -6px, rgba(255, 216, 150, 0.6), transparent 72%),
+    radial-gradient(ellipse 180px 170px at 50% 0, rgba(255, 190, 130, 0.2), transparent 78%);
 }
 
 .beach-glimmer::after {
   content: "";
   position: absolute;
   inset: 0 auto 0 50%;
-  width: 220px;
+  width: 240px;
   translate: -50% 0;
-  background: repeating-linear-gradient(to bottom, transparent 0 7px, rgba(255, 214, 150, 0.14) 7px 9px);
-  mask: radial-gradient(ellipse 55% 90% at 50% 0%, black, transparent 78%);
-  -webkit-mask: radial-gradient(ellipse 55% 90% at 50% 0%, black, transparent 78%);
+  background: repeating-linear-gradient(to bottom, transparent 0 8px, rgba(255, 214, 150, 0.16) 8px 10px);
+  mask: radial-gradient(ellipse 52% 92% at 50% 0%, black, transparent 88%);
+  -webkit-mask: radial-gradient(ellipse 52% 92% at 50% 0%, black, transparent 88%);
 }
 
 .beach-waves {
-  position: relative;
-  display: block;
+  position: absolute;
+  inset: auto 0 -1px 0;
   width: 100%;
-  margin-top: -56px;
-  background: linear-gradient(to bottom, #4d5878, #56648a);
+  height: 110px;
 }
 
 .beach-sand {
