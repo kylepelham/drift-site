@@ -29,48 +29,71 @@ const features = [
     tint: "var(--aqua)",
     title: "Projects at a glance",
     body: "Threads live under workspace folders in one sidebar. Rename, personalize, archive, restore. No tabs. Ever.",
+    icon: "folder",
   },
   {
     tint: "var(--coral)",
     title: "A complete agent engine",
     body: "Build and plan agents, custom agents, provider OAuth, MCP servers, and plugins, all managed inside the app.",
+    icon: "engine",
   },
   {
     tint: "var(--sand)",
     title: "Long-session performance",
     body: "Virtualized transcripts stay smooth at thousands of messages, with streamed reasoning and syntax-highlighted tools.",
+    icon: "bolt",
   },
   {
     tint: "var(--seafoam)",
     title: "Context control",
     body: "Fork history, undo and redo turns, steer a running session, or spawn an independent sibling thread mid-flight.",
+    icon: "fork",
   },
   {
     tint: "var(--lilac)",
     title: "Provider flexibility",
     body: "Anthropic, OpenAI, GitHub Copilot, Google, OpenRouter, and more. Pick model, agent, and thinking level per thread.",
+    icon: "threads",
   },
   {
     tint: "var(--coral)",
     title: "Guarded MCP management",
     body: "Review exact server definitions before enabling them. Changed definitions need a fresh decision and fail closed.",
+    icon: "shield",
   },
   {
     tint: "var(--seafoam)",
     title: "Private by wiring",
-    body: "The bundled engine listens only on localhost with fresh credentials each launch. Prompts go to the provider you configure, nowhere else.",
+    body: "The bundled engine listens only on localhost with fresh credentials each launch. Prompts go to your provider, nowhere else.",
+    icon: "lock",
   },
   {
     tint: "var(--aqua)",
     title: "A workspace you can tune",
     body: "Command palette, rebindable shortcuts, eight themes, custom fonts and CSS, and 18 interface languages.",
+    icon: "palette",
   },
   {
     tint: "var(--sand)",
     title: "Native desktop behavior",
     body: "Open files in your editor, get configurable notifications, and install signed updates straight from GitHub Releases.",
+    icon: "plug",
   },
 ]
+
+const icons: Record<string, string> = {
+  folder: '<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z" />',
+  engine:
+    '<rect x="5" y="5" width="14" height="14" rx="2" /><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3" />',
+  bolt: '<path d="M13 2 4 14h6l-1 8 9-12h-6Z" />',
+  fork: '<circle cx="6" cy="5" r="2.2" /><circle cx="18" cy="5" r="2.2" /><circle cx="12" cy="19" r="2.2" /><path d="M6 7.2v2a4 4 0 0 0 4 4h4a4 4 0 0 0 4-4v-2M12 13.2v3.6" />',
+  threads: '<path d="M4 6h16M4 12h10M4 18h13" /><circle cx="19" cy="17.5" r="2.5" />',
+  shield: '<path d="M12 3 5 6v5c0 4.4 3 8.1 7 9.5 4-1.4 7-5.1 7-9.5V6Z" /><path d="m9 12 2 2 4-4" />',
+  lock: '<rect x="5" y="11" width="14" height="9" rx="2" /><path d="M8 11V8a4 4 0 0 1 8 0v3" />',
+  palette:
+    '<path d="M12 3a9 9 0 0 0 0 18c1.5 0 2-.9 2-2 0-1.4-1-1.7-1-3 0-1.2 1-2 2.4-2H17a5 5 0 0 0 5-5c0-3.7-4.5-6-10-6Z" /><circle cx="7.5" cy="11" r="1" fill="currentColor" /><circle cx="10.5" cy="7.5" r="1" fill="currentColor" /><circle cx="15" cy="7.5" r="1" fill="currentColor" />',
+  plug: '<path d="M9 3v5M15 3v5M6 8h12v3a6 6 0 0 1-6 6 6 6 0 0 1-6-6Z" /><path d="M12 17v4" />',
+}
 ---
 
 <!doctype html>
@@ -133,13 +156,12 @@ const features = [
       <svg class="wave-divider" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true">
         <path d="M0 40 C 240 70 480 10 720 35 C 960 60 1200 20 1440 45 L 1440 0 L 0 0 Z" fill="var(--bg)"></path>
       </svg>
-      <div class="wrap">
+      <div class="wrap showcase-head">
         <span class="kicker">See it swim</span>
         <h2>Watch Drift work</h2>
         <p class="lede">
-          Ask for a change and Drift takes the thread: it reads your code, edits the
-          files, and runs the tests until they pass. This is Drift doing exactly that,
-          recorded straight from the app.
+          Ask for a change and Drift reads your code, edits the files, and reruns the
+          tests until they pass. Recorded straight from the app.
         </p>
         <div class="showcase-frame">
           <video data-src="/showcase.mp4" autoplay muted loop playsinline preload="none" poster="/poster.jpg"></video>
@@ -155,12 +177,23 @@ const features = [
         <span class="kicker">Why Drift</span>
         <h2>Everything close, nothing in the way</h2>
         <p class="lede">Your projects, your providers, your machine.</p>
-        <div class="depths">
+        <div class="feature-grid">
           {
-            features.map((f, i) => (
-              <article class="depth-row" style={`--tint: ${f.tint}`}>
-                <span class="depth-mark">{i === 0 ? "0 m" : `-${i * 12} m`}</span>
-                <h3>{f.title}</h3>
+            features.map((f) => (
+              <article class="feature-card" style={`--tint: ${f.tint}`}>
+                <div class="feature-head">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.9"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                    set:html={icons[f.icon]}
+                  />
+                  <h3>{f.title}</h3>
+                </div>
                 <p>{f.body}</p>
               </article>
             ))
@@ -217,8 +250,8 @@ const features = [
         <div class="beach-glimmer"></div>
       </div>
       <svg class="beach-waves" viewBox="0 0 1440 110" preserveAspectRatio="none" aria-hidden="true">
-        <path d="M0 60 C 180 30 360 90 540 65 C 720 40 900 85 1080 60 C 1260 35 1350 70 1440 55 L 1440 110 L 0 110 Z" fill="#5f97b8" opacity="0.55"></path>
-        <path d="M0 75 C 200 50 420 100 640 78 C 860 56 1080 98 1440 70 L 1440 110 L 0 110 Z" fill="#7fb6cf" opacity="0.7"></path>
+        <path d="M0 60 C 180 30 360 90 540 65 C 720 40 900 85 1080 60 C 1260 35 1350 70 1440 55 L 1440 110 L 0 110 Z" fill="#5e6c94" opacity="0.6"></path>
+        <path d="M0 75 C 200 50 420 100 640 78 C 860 56 1080 98 1440 70 L 1440 110 L 0 110 Z" fill="#71809f" opacity="0.75"></path>
         <path d="M0 92 C 240 72 480 108 760 92 C 1040 76 1240 104 1440 88 L 1440 110 L 0 110 Z" fill="#f3d9ad"></path>
       </svg>
       <div class="beach-sand">
