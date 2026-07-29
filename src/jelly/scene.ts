@@ -73,12 +73,18 @@ function driftPath(t: number, out: THREE.Vector3, horizontalScale = 1): THREE.Ve
 }
 
 export function createJellyScene(canvas: HTMLCanvasElement): JellyScene {
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false })
+  const compact = canvas.clientWidth <= 720
+  const renderer = new THREE.WebGLRenderer({
+    canvas,
+    antialias: !compact,
+    alpha: false,
+    powerPreference: "high-performance",
+  })
   const scene = new THREE.Scene()
   const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 40)
   camera.position.set(0, 0.2, 6.4)
 
-  const target = new THREE.WebGLRenderTarget(1, 1, { samples: 4 })
+  const target = new THREE.WebGLRenderTarget(1, 1, { samples: compact ? 0 : 4 })
   const crt = makeCrt(target)
   const water = makeWater()
   const bubbles = makeBubbles(140)
@@ -94,7 +100,9 @@ export function createJellyScene(canvas: HTMLCanvasElement): JellyScene {
   const prev = new THREE.Vector3()
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
   const speed = reduced ? 0.12 : 1
+  const frameInterval = compact ? 1000 / 30 : 0
   let horizontalScale = 1
+  let lastFrame = 0
 
   function onPointer(event: PointerEvent) {
     pointer.x = (event.clientX / window.innerWidth) * 2 - 1
@@ -106,7 +114,7 @@ export function createJellyScene(canvas: HTMLCanvasElement): JellyScene {
     const width = canvas.clientWidth
     const height = canvas.clientHeight
     if (width === 0 || height === 0) return
-    const dpr = Math.min(window.devicePixelRatio, 1.75)
+    const dpr = Math.min(window.devicePixelRatio, compact ? 1.25 : 1.75)
     renderer.setPixelRatio(dpr)
     renderer.setSize(width, height, false)
     target.setSize(Math.floor(width * dpr), Math.floor(height * dpr))
@@ -130,6 +138,8 @@ export function createJellyScene(canvas: HTMLCanvasElement): JellyScene {
 
   function frame(now: number) {
     raf = requestAnimationFrame(frame)
+    if (frameInterval && now - lastFrame < frameInterval) return
+    lastFrame = now
     const t = ((now - start) / 1000) * speed
     pointerSmooth.lerp(pointer, 0.04)
 

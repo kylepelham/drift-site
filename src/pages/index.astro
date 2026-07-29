@@ -1,28 +1,16 @@
 ---
 import "../styles.css"
+import nunitoLatin from "@fontsource-variable/nunito/files/nunito-latin-wght-normal.woff2?url"
 
-const title = "Drift : a focused Windows desktop for coding with AI agents"
+const title = "Drift | Open-Source Desktop AI Coding Agent for Windows"
 const description =
-  "Drift is a focused Windows desktop for coding with AI agents. One installer with workspaces, long-running threads, forking, MCP approvals, and eight themes. Free and MIT licensed."
+  "Drift is an open-source desktop AI coding agent for Windows with local workspaces, long-running threads, model switching, forking, and guarded MCP tools."
 const repoUrl = "https://github.com/kylepelham/Drift"
 const releasesUrl = `${repoUrl}/releases/latest`
 const canonical = new URL("/", Astro.site)
 const ogImage = new URL("/og.jpg", Astro.site)
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  name: "Drift",
-  operatingSystem: "Windows 10, Windows 11",
-  applicationCategory: "DeveloperApplication",
-  description,
-  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-  downloadUrl: releasesUrl,
-  license: `${repoUrl}/blob/master/LICENSE`,
-  url: canonical.href,
-  image: ogImage.href,
-  author: { "@type": "Person", name: "Kyle Pelham", url: "https://github.com/kylepelham" },
-}
+const posterImage = new URL("/poster.jpg", Astro.site)
+const showcaseVideo = new URL("/showcase.mp4", Astro.site)
 
 const features = [
   {
@@ -81,6 +69,71 @@ const features = [
   },
 ]
 
+const websiteId = `${canonical.href}#website`
+const softwareId = `${canonical.href}#software`
+const videoId = `${canonical.href}#demo`
+const authorId = `${canonical.href}#author`
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": websiteId,
+      url: canonical.href,
+      name: "Drift",
+      alternateName: "Drift Agent",
+      description,
+      inLanguage: "en",
+    },
+    {
+      "@type": "Person",
+      "@id": authorId,
+      name: "Kyle Pelham",
+      url: "https://github.com/kylepelham",
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": softwareId,
+      name: "Drift",
+      url: canonical.href,
+      sameAs: repoUrl,
+      operatingSystem: "Windows 10, Windows 11",
+      applicationCategory: "DeveloperApplication",
+      applicationSubCategory: "AI coding agent",
+      description,
+      image: ogImage.href,
+      author: { "@id": authorId },
+      isPartOf: { "@id": websiteId },
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+        availability: "https://schema.org/InStock",
+        url: releasesUrl,
+      },
+      downloadUrl: releasesUrl,
+      softwareRequirements: "Windows 10 or Windows 11 on x64 hardware",
+      featureList: features.map((feature) => feature.title),
+      license: `${repoUrl}/blob/master/LICENSE`,
+      subjectOf: { "@id": videoId },
+      potentialAction: { "@type": "DownloadAction", target: releasesUrl },
+    },
+    {
+      "@type": "VideoObject",
+      "@id": videoId,
+      name: "Drift desktop AI coding agent demo",
+      description: "A real Drift session reading code, editing files, running tests, and changing app settings.",
+      thumbnailUrl: posterImage.href,
+      contentUrl: showcaseVideo.href,
+      uploadDate: "2026-07-28T16:48:23+01:00",
+      duration: "PT24S",
+      inLanguage: "en",
+      isPartOf: { "@id": websiteId },
+      about: { "@id": softwareId },
+    },
+  ],
+}
+
 const icons: Record<string, string> = {
   folder: '<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z" />',
   engine:
@@ -103,22 +156,30 @@ const icons: Record<string, string> = {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="application-name" content="Drift" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="theme-color" content="#10161f" />
+    <meta name="color-scheme" content="dark" />
     <link rel="canonical" href={canonical.href} />
-    <link rel="icon" type="image/svg+xml" href="/drift-logo.svg" />
+    <link rel="preload" href={nunitoLatin} as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="icon" type="image/svg+xml" sizes="any" href="/drift-logo.svg" />
     <link rel="sitemap" href="/sitemap.xml" />
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
     <meta property="og:site_name" content="Drift" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical.href} />
     <meta property="og:image" content={ogImage.href} />
+    <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Drift, a desktop AI coding agent for Windows" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage.href} />
+    <meta name="twitter:image:alt" content="Drift, a desktop AI coding agent for Windows" />
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body>
@@ -127,8 +188,8 @@ const icons: Record<string, string> = {
       <div class="hero-tint"></div>
       <div class="hero-inner">
         <span class="hero-mark mark" role="img" aria-label="Drift the jellyfish"></span>
-        <h1>Drift</h1>
-        <p class="hero-tag">A focused Windows desktop for coding with AI agents.</p>
+        <h1>Drift<span class="sr-only">: open-source desktop AI coding agent for Windows</span></h1>
+        <p class="hero-tag">An open-source desktop AI coding agent for Windows.</p>
         <p class="hero-sub">
           A complete agent engine in one installer, with workspaces, long-running threads,
           and a desktop that stays out of your way.
@@ -152,6 +213,7 @@ const icons: Record<string, string> = {
       <span class="scroll-cue">dive in</span>
     </header>
 
+    <main>
     <section id="showcase">
       <svg class="wave-divider" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true">
         <path d="M0 40 C 240 70 480 10 720 35 C 960 60 1200 20 1440 45 L 1440 0 L 0 0 Z" fill="var(--bg)"></path>
@@ -164,7 +226,7 @@ const icons: Record<string, string> = {
           tests until they pass. Recorded straight from the app.
         </p>
         <div class="showcase-frame">
-          <video data-src="/showcase.mp4" autoplay muted loop playsinline preload="none" poster="/poster.jpg"></video>
+          <video data-src="/showcase.mp4" autoplay muted loop playsinline preload="none" poster="/poster.jpg" aria-label="A real Drift session editing code and running tests"></video>
         </div>
         <p class="showcase-caption">
           Sped up, not staged. Your threads stay on your machine.
@@ -238,6 +300,7 @@ const icons: Record<string, string> = {
         </div>
       </div>
     </section>
+    </main>
 
     <footer class="beach">
       <div class="beach-sky">
