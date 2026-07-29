@@ -65,8 +65,8 @@ function makeCrt(target: THREE.WebGLRenderTarget) {
   return { scene, camera, mat }
 }
 
-function driftPath(t: number, out: THREE.Vector3): THREE.Vector3 {
-  out.x = Math.sin(t * 0.2) * 1.6 + Math.sin(t * 0.073) * 0.45
+function driftPath(t: number, out: THREE.Vector3, horizontalScale = 1): THREE.Vector3 {
+  out.x = (Math.sin(t * 0.2) * 1.6 + Math.sin(t * 0.073) * 0.45) * horizontalScale
   out.y = Math.sin(t * 0.31) * 0.42 + Math.cos(t * 0.11) * 0.25 + 0.62
   out.z = Math.sin(t * 0.16) * 0.6
   return out
@@ -94,6 +94,7 @@ export function createJellyScene(canvas: HTMLCanvasElement): JellyScene {
   const prev = new THREE.Vector3()
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
   const speed = reduced ? 0.12 : 1
+  let horizontalScale = 1
 
   function onPointer(event: PointerEvent) {
     pointer.x = (event.clientX / window.innerWidth) * 2 - 1
@@ -111,6 +112,11 @@ export function createJellyScene(canvas: HTMLCanvasElement): JellyScene {
     target.setSize(Math.floor(width * dpr), Math.floor(height * dpr))
     camera.aspect = width / height
     camera.updateProjectionMatrix()
+    const jellyScale = width <= 720 ? 0.56 : 0.72
+    jelly.group.scale.setScalar(jellyScale)
+    const visibleHalfWidth = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * 5.8 * camera.aspect
+    const horizontalRoom = Math.max(0, visibleHalfWidth - jellyScale * 1.15)
+    horizontalScale = Math.min(1, horizontalRoom / 2.05)
     crt.mat.uniforms.uResolution!.value.set(width * dpr, height * dpr)
     const waterMat = water.material as THREE.ShaderMaterial
     waterMat.uniforms.uResolution!.value.set(width, height)
@@ -127,8 +133,8 @@ export function createJellyScene(canvas: HTMLCanvasElement): JellyScene {
     const t = ((now - start) / 1000) * speed
     pointerSmooth.lerp(pointer, 0.04)
 
-    driftPath(t * 0.6, pos)
-    driftPath(t * 0.6 - 0.25, prev)
+    driftPath(t * 0.6, pos, horizontalScale)
+    driftPath(t * 0.6 - 0.25, prev, horizontalScale)
     jelly.group.position.copy(pos)
     ndc.copy(pos).project(camera)
     look.x = THREE.MathUtils.clamp((pointerSmooth.x - ndc.x) * 1.4, -1, 1)

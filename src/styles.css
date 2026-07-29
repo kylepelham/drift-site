@@ -323,28 +323,10 @@ h2 {
   transition: transform 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
 }
 
-.feature-card::after {
-  content: "";
-  position: absolute;
-  top: -40px;
-  right: -40px;
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  background: radial-gradient(circle, color-mix(in srgb, var(--tint) 14%, transparent), transparent 70%);
-  opacity: 0;
-  transition: opacity 220ms ease;
-  pointer-events: none;
-}
-
 .feature-card:hover {
   transform: translateY(-3px);
   border-color: color-mix(in srgb, var(--tint) 40%, var(--edge));
   box-shadow: 0 14px 36px color-mix(in srgb, black 30%, transparent);
-}
-
-.feature-card:hover::after {
-  opacity: 1;
 }
 
 .feature-head {
@@ -406,21 +388,24 @@ h2 {
   font-weight: 800;
 }
 
-.req-row {
+.download-actions {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.6rem 1.8rem;
-  margin-top: 1.6rem;
-  font-size: 0.82rem;
-  color: var(--ink-muted);
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
 }
 
-.req-row span::before {
-  content: "*";
-  color: var(--coral);
-  margin-right: 0.4rem;
-  font-weight: 900;
+.release-link {
+  color: var(--ink-muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.release-link:hover {
+  color: var(--aqua);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
 }
 
 .gh-stats {
@@ -571,11 +556,20 @@ h2 {
 
 .beach-links a:hover {
   color: #3d2f1b;
-  text-decoration: underline wavy;
+  text-decoration-line: underline;
+  text-decoration-style: wavy;
+  text-decoration-thickness: 0.08em;
+  text-decoration-skip-ink: none;
+  text-underline-offset: 0.25em;
 }
 
 .beach-fine {
   width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.8rem 2rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid rgba(107, 85, 55, 0.2);
   font-size: 0.75rem;
   color: #8a7250;
 }
@@ -609,6 +603,12 @@ h2 {
 }
 
 @media (max-width: 720px) {
-  .flow { grid-template-columns: 1fr; }
-  .flow-arrow { transform: rotate(90deg); justify-self: center; }
+  .hero-sub,
+  .hero-inner > .hero-note {
+    display: none;
+  }
+
+  .beach-fine {
+    flex-direction: column;
+  }
 }

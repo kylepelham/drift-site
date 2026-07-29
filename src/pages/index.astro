@@ -27,56 +27,56 @@ const jsonLd = {
 const features = [
   {
     tint: "var(--aqua)",
-    title: "Projects at a glance",
-    body: "Threads live under workspace folders in one sidebar. Rename, personalize, archive, restore. No tabs. Ever.",
+    title: "Every codebase, right where you left it",
+    body: "Each folder becomes a workspace with its own threads, identity, and history. Jump projects without losing your place.",
     icon: "folder",
   },
   {
     tint: "var(--coral)",
-    title: "A complete agent engine",
-    body: "Build and plan agents, custom agents, provider OAuth, MCP servers, and plugins, all managed inside the app.",
+    title: "Install it. Connect. Build.",
+    body: "The complete agent engine ships inside Drift. Connect your provider and start working without installing Node or wiring up a CLI.",
     icon: "engine",
   },
   {
     tint: "var(--sand)",
-    title: "Long-session performance",
-    body: "Virtualized transcripts stay smooth at thousands of messages, with streamed reasoning and syntax-highlighted tools.",
+    title: "Ten messages or ten thousand",
+    body: "Long-running threads stay quick to open and smooth to scroll, with live reasoning and readable, syntax-highlighted tool output.",
     icon: "bolt",
   },
   {
     tint: "var(--seafoam)",
-    title: "Context control",
-    body: "Fork history, undo and redo turns, steer a running session, or spawn an independent sibling thread mid-flight.",
+    title: "Take the better branch",
+    body: "Fork from any turn, undo a dead end, steer work mid-run, or send the useful context into a separate sibling thread.",
     icon: "fork",
   },
   {
     tint: "var(--lilac)",
-    title: "Provider flexibility",
-    body: "Anthropic, OpenAI, GitHub Copilot, Google, OpenRouter, and more. Pick model, agent, and thinking level per thread.",
+    title: "Use the right model for the moment",
+    body: "Switch provider, model, agent, and thinking level per thread as the job changes. Anthropic, OpenAI, Google, Copilot, and more are supported.",
     icon: "threads",
   },
   {
     tint: "var(--coral)",
-    title: "Guarded MCP management",
-    body: "Review exact server definitions before enabling them. Changed definitions need a fresh decision and fail closed.",
+    title: "Approve what actually runs",
+    body: "Review an MCP server's exact definition before enabling it. If that definition changes, Drift stops it until you approve it again.",
     icon: "shield",
   },
   {
     tint: "var(--seafoam)",
-    title: "Private by wiring",
-    body: "The bundled engine listens only on localhost with fresh credentials each launch. Prompts go to your provider, nowhere else.",
+    title: "Your threads stay local",
+    body: "Drift stores its session database on your machine. The engine listens only on localhost with fresh credentials every launch.",
     icon: "lock",
   },
   {
     tint: "var(--aqua)",
-    title: "A workspace you can tune",
-    body: "Command palette, rebindable shortcuts, eight themes, custom fonts and CSS, and 18 interface languages.",
+    title: "Make the workspace yours",
+    body: "Rebind shortcuts, choose from eight themes, bring custom fonts and CSS, and use Drift in any of 18 interface languages.",
     icon: "palette",
   },
   {
     tint: "var(--sand)",
-    title: "Native desktop behavior",
-    body: "Open files in your editor, get configurable notifications, and install signed updates straight from GitHub Releases.",
+    title: "From agent output to your editor",
+    body: "Open referenced files in your editor, get native notifications when work finishes, and install signed updates in place.",
     icon: "plug",
   },
 ]
@@ -208,17 +208,12 @@ const icons: Record<string, string> = {
           <span class="hero-mark mark" role="img" aria-label="Drift"></span>
           <h2>Take Drift home</h2>
           <div class="version-pill" data-version>latest release</div>
-          <div class="hero-actions" style="margin-top: 0">
+          <div class="download-actions">
             <a class="btn btn-primary" href={releasesUrl} data-installer>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"></path><path d="m7 11 5 5 5-5"></path><path d="M4 20h16"></path></svg>
               Download installer
             </a>
-            <a class="btn btn-ghost" href={releasesUrl}>All releases</a>
-          </div>
-          <div class="req-row">
-            <span>Windows 10/11 x64</span>
-            <span>WebView2 runtime</span>
-            <span>Bring your own provider account</span>
+            <a class="release-link" href={releasesUrl}>All releases</a>
           </div>
           <div class="gh-stats">
             <a class="gh-stat" href={repoUrl} style="--stat: var(--sand)">
@@ -266,10 +261,10 @@ const icons: Record<string, string> = {
             <a href={`${repoUrl}/security/advisories/new`}>Report a vulnerability</a>
             <a href="https://github.com/sst/opencode">OpenCode</a>
           </nav>
-          <p class="beach-fine">
-            Drift is an independent desktop client built around OpenCode, bundled under its
-            MIT license. Copyright (c) 2026 Kyle Pelham. Drawn ashore by a small jellyfish.
-          </p>
+          <div class="beach-fine">
+            <span>&copy; 2026 Kyle Pelham</span>
+            <span>OpenCode is bundled under its MIT license.</span>
+          </div>
         </div>
       </div>
     </footer>
