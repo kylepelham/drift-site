@@ -306,6 +306,14 @@ h2 {
 
 /* ------- features ------- */
 
+.feature-intro {
+  text-align: center;
+}
+
+.feature-intro .lede {
+  margin-inline: auto;
+}
+
 .feature-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
@@ -373,8 +381,20 @@ h2 {
 }
 
 .download-card .hero-mark {
+  display: block;
   width: 58px;
   height: 58px;
+  margin: 0 auto;
+  animation: none;
+}
+
+.download-card > h2 {
+  margin-top: 0;
+}
+
+.download-card .hero-note {
+  max-width: 44rem;
+  margin-inline: auto;
 }
 
 .version-pill {
